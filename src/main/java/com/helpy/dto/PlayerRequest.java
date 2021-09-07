@@ -13,6 +13,6 @@ public class PlayerRequest {
     private String password;
     private String email;
     private String phone;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
 }

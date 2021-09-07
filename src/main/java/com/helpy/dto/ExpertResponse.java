@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 @Data
-public class PlayerResponse {
+public class ExpertResponse {
     private Long id;
     private String firstName;
     private String lastName;
@@ -14,4 +14,5 @@ public class PlayerResponse {
     private String phone;
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
+    private String description;
 }
