@@ -42,6 +42,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game create(GameRequest game) throws Exception {
-        return gameRepository.save(converter.convertGameToEntity(game));
+        if (providerService.getGameById(game.getProviderId()) != null){
+            return gameRepository.save(converter.convertGameToEntity(game));
+        }
+        throw new ModelNotFoundException("Game not found in provider with id " + game.getProviderId());
     }
 }
