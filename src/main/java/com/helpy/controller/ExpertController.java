@@ -2,6 +2,7 @@ package com.helpy.controller;
 
 import com.helpy.dto.ExpertRequest;
 import com.helpy.dto.ExpertResponse;
+import com.helpy.exception.ModelNotFoundException;
 import com.helpy.model.Expert;
 import com.helpy.service.ExpertService;
 import com.helpy.util.ExpertConverter;
@@ -26,9 +27,19 @@ public class ExpertController {
         var experts = service.getAll();
         return new ResponseEntity<>(converter.convertExpertToResponse(experts), HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ExpertResponse> getExpertById(@PathVariable(name = "id") Long id) throws Exception{
+        var expert = service.getById(id).orElseThrow(() -> new ModelNotFoundException("Expert not found with id " + id));
+        return new ResponseEntity<>(converter.convertExpertToResponse(expert), HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<ExpertResponse> createExpert(@Valid @RequestBody ExpertRequest request) throws Exception {
         var expert = service.create(converter.convertExpertToEntity(request));
         return new ResponseEntity<>(converter.convertExpertToResponse(expert), HttpStatus.CREATED);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteExpert(@PathVariable(name = "id") Long id) throws Exception {
+        service.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
