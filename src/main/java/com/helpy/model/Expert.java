@@ -2,9 +2,8 @@ package com.helpy.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("expert")
@@ -15,4 +14,5 @@ import javax.persistence.Entity;
 public class Expert extends User {
     @Column
     private String description;
+
 }
