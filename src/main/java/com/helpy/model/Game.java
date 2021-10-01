@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "games")
@@ -19,4 +21,6 @@ public class Game {
     private Long id;
     private Long providerId;
     private String name;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
+    private List<Expert> experts = new ArrayList<>();
 }
