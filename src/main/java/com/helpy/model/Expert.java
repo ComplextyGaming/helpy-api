@@ -14,5 +14,8 @@ import java.util.List;
 public class Expert extends User {
     @Column
     private String description;
-
+    @ManyToOne
+    @JoinColumn(name = "game_id", nullable = false,
+    foreignKey = @ForeignKey(name = "FK_expert_game"))
+    private Game game;
 }

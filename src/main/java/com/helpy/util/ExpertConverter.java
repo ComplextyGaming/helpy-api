@@ -5,6 +5,7 @@ import com.helpy.dto.ExpertResponse;
 import com.helpy.dto.PlayerRequest;
 import com.helpy.dto.PlayerResponse;
 import com.helpy.model.Expert;
+import com.helpy.model.Game;
 import com.helpy.model.Player;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,17 @@ public class ExpertConverter {
     private ModelMapper modelMapper;
 
     public Expert convertExpertToEntity(ExpertRequest request){
-        return modelMapper.map(request, Expert.class);
+        var expert = modelMapper.map(request, Expert.class);
+        expert.setGame(Game.builder().id(request.getGameId()).build());
+        return expert;
     }
     public ExpertResponse convertExpertToResponse(Expert expert){
-        return modelMapper.map(expert, ExpertResponse.class);
+        var expertResponse = modelMapper.map(expert, ExpertResponse.class);
+        expertResponse.setGameId(expert.getGame().getId());
+        return expertResponse;
     }
     public List<ExpertResponse> convertExpertToResponse(List<Expert> experts){
-        return experts.stream().map(expert -> modelMapper.map(expert, ExpertResponse.class))
+        return experts.stream().map(this::convertExpertToResponse)
                 .collect(Collectors.toList());
     }
 }
