@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 public class PlayerServiceImpl extends CrudServiceImpl<Player, Long> implements PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
-
     @Override
     protected GenericRepository<Player, Long> getRepository() {
         return playerRepository;
