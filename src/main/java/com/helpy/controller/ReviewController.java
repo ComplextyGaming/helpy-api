@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/api/review")
 public class ReviewController {
 
     @Autowired

@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/social")
+@RequestMapping("/api/social")
 public class SocialController {
 
     @Autowired

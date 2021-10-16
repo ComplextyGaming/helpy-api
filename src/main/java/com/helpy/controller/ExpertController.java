@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-@CrossOrigin
 @RestController
-@RequestMapping("/experts")
+@RequestMapping("/api/experts")
 public class ExpertController {
     @Autowired
     private ExpertConverter converter;
