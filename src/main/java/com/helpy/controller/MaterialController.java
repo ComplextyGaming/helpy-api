@@ -54,6 +54,7 @@ public class MaterialController {
     public ResponseEntity<MaterialResponse> createMaterial(@Valid @RequestBody MaterialRequest request,
                                                            @Valid @PathVariable(name = "expertId") Long expertId,
                                                            @Valid @PathVariable(name = "gameId") Long gameId) throws Exception{
+
         var expert = expertService.getById(expertId).orElseThrow(() -> new ResourceNotFoundException("Expert not found"));
         var game = gameRepository.getById(gameId);
 
