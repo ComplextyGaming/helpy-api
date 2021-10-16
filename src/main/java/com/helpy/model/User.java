@@ -13,7 +13,9 @@ import java.time.LocalDate;
         discriminatorType = DiscriminatorType.STRING)
 @Getter
 @Setter
-public abstract class User {
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -30,6 +32,5 @@ public abstract class User {
     @Column(nullable = false)
     protected String phone;
     @Column(columnDefinition = "DATE")
-    @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate birthdate;
 }
