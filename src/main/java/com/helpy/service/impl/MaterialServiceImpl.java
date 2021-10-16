@@ -7,7 +7,7 @@ import com.helpy.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("MaterialServiceImpl")
 public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> implements MaterialService {
 
     @Autowired
