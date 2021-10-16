@@ -6,7 +6,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("player")
+@DiscriminatorValue("players")
 public class Player extends User {
 
 }

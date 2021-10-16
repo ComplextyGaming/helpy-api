@@ -13,6 +13,7 @@ import com.helpy.util.GameConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<GameResponse> getAll() throws Exception {
         List<Game> games = gameRepository.findAll();
+        if (games.isEmpty())
+                return new ArrayList<GameResponse>();
         String fields = games.stream().map(Game::getProviderId).collect(Collectors.toList()).toString();
         var providedGames = providerService.getAllGames(fields.substring(1,fields.length()-1));
         return converter.convertGameToResponse(games, providedGames);
