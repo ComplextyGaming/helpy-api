@@ -13,4 +13,5 @@ public class MaterialResponse {
     private Double cost;
     private Double discount;
     private List<TagResponse> tags;
+    private ExpertResponse expert;
 }

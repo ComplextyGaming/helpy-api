@@ -1,13 +1,20 @@
 package com.helpy.controller;
 
+import com.helpy.dto.ListTagRequest;
 import com.helpy.dto.MaterialRequest;
 import com.helpy.dto.MaterialResponse;
+import com.helpy.dto.TagRequest;
+
 import com.helpy.dto.MaterialesResumenDTO;
+
 import com.helpy.exception.ResourceNotFoundException;
+import com.helpy.model.Material;
 import com.helpy.model.Tag;
+import com.helpy.repository.ExpertRepository;
 import com.helpy.repository.GameRepository;
 import com.helpy.service.*;
 import com.helpy.util.MaterialConverter;
+import com.helpy.util.TagConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -20,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/materials")
@@ -39,7 +47,13 @@ public class MaterialController {
     private ExpertService expertService;
 
     @Autowired
+    private ExpertRepository expertRepository;
+
+    @Autowired
     private MaterialConverter converter;
+
+    @Autowired
+    private TagConverter tagConverter;
 
     @GetMapping
     public ResponseEntity<List<MaterialResponse>> getAll() throws Exception{
@@ -61,11 +75,14 @@ public class MaterialController {
         var expert = expertService.getById(expertId).orElseThrow(() -> new ResourceNotFoundException("Expert not found"));
         var game = gameRepository.getById(gameId);
 
-        List<Tag> tags = new ArrayList<>();
-
-        for (Tag tag: request.getTags()) {
-            tags.add(tagService.getById(tag.getId()).orElseThrow(() -> new ResourceNotFoundException("Tag not found")));
-        }
+        var tags = request.getTags().stream().map(tag -> {
+            try {
+                return tagService.getById(tag.getId()).orElse(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).collect(Collectors.toList());
 
         var tem = converter.convertMaterialToEntity(request);
         tem.setExpert(expert);
@@ -96,6 +113,31 @@ public class MaterialController {
         materialService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/expert/{id}")
+    public ResponseEntity<List<MaterialResponse>> getByExpertId(@Valid @PathVariable(name = "id") Long id) throws Exception {
+        var materials = materialService.getByExpertId(id);
+        return new ResponseEntity<>(converter.convertMaterialToResponse(materials), HttpStatus.OK);
+    }
+
+    @GetMapping("/expert/{expertId}/tag/{tagId}")
+    public ResponseEntity<List<MaterialResponse>> getByExpertIdAndTagId(@Valid @PathVariable(name = "expertId") Long expertId,
+                                                                        @Valid @PathVariable(name = "tagId") Long tagId) throws Exception{
+        var materials = materialService.getByExpertId(expertId);
+        var queryMaterial = materials;
+        var m = materials.stream().map(material -> {
+            if(material.getId() == expertId){
+                material.getTags().stream().map(tag -> {
+                    if(tag.getId() == tagId){
+                        queryMaterial.add(material);
+                    }
+                    return null;
+                });
+            }
+            return null;
+        });
+
+        return new ResponseEntity<>(converter.convertMaterialToResponse(queryMaterial), HttpStatus.OK);
 
     @GetMapping(value = "/listarResumen")
     public ResponseEntity<List<MaterialesResumenDTO>> listarResumen() {

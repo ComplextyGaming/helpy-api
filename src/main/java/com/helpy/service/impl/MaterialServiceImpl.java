@@ -14,12 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 @Service("MaterialServiceImpl")
 @Slf4j
@@ -34,6 +37,10 @@ public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> impleme
     }
 
     @Override
+
+    public List<Material> getByExpertId(Long id) throws Exception {
+        return materialRepository.findMaterialsByExpert_Id(id);
+
     public byte[] generarReporte() {
         byte[] data = null;
 
@@ -60,5 +67,6 @@ public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> impleme
                 .forEach((name, count)->
                     materialesResumenDTOS.add( new MaterialesResumenDTO(name, count.intValue())));
         return materialesResumenDTOS;
+
     }
 }

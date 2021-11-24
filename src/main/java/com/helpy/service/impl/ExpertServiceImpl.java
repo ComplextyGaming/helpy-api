@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("ExpertServiceImpl")
 public class ExpertServiceImpl extends  CrudServiceImpl<Expert, Long> implements ExpertService {
     @Autowired
     private ExpertRepository expertRepository;

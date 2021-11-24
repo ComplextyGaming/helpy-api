@@ -24,12 +24,16 @@ public class GameController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GameResponse> getGameById(@PathVariable(name = "id") Long id) throws Exception{
+    public ResponseEntity<GameResponse> getGameById(@Valid @PathVariable(name = "id") Long id) throws Exception{
         var game = gameService.getById(id);
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Game> createGame(@Valid @RequestBody GameRequest request) throws Exception {
         return new ResponseEntity<>(gameService.create(request), HttpStatus.CREATED);
+    }
+    @GetMapping("/a/{nose}")
+    public ResponseEntity<List<GameResponse>> getNameLike(@Valid @PathVariable(name = "nose") String nose) throws Exception{
+        return new ResponseEntity<>(gameService.findByNameContaining(nose), HttpStatus.CREATED);
     }
 }
