@@ -11,5 +11,5 @@ public class MaterialRequest {
     private String description;
     private Double cost;
     private Double discount;
-    private List<Tag> tags;
+    private List<ListTagRequest> tags;
 }
