@@ -32,12 +32,4 @@ public class HelpyApiApplication {
             }
         };
     }
-
-    @Bean
-    CommandLineRunner run(@Qualifier("MaterialServiceImpl") MaterialService materialService){
-        return args -> {
-
-        };
-    }
-
 }

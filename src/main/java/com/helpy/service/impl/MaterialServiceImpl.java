@@ -5,6 +5,8 @@ import com.helpy.model.Material;
 import com.helpy.repository.GenericRepository;
 import com.helpy.repository.MaterialRepository;
 import com.helpy.service.MaterialService;
+import lombok.extern.slf4j.Slf4j;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -20,6 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service("MaterialServiceImpl")
+@Slf4j
 public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> implements MaterialService {
 
     @Autowired
@@ -38,22 +41,24 @@ public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> impleme
         params.put("txt_titulo", "Prueba de titulo");
 
         try {
-            File file = new ClassPathResource("/reports/consultas.jasper").getFile();
+            File file = new ClassPathResource("/reports/materiales.jasper").getFile();
             JasperPrint print = JasperFillManager.fillReport(file.getPath(), params, new JRBeanCollectionDataSource(this.listarResumen()));
+            data = JasperExportManager.exportReportToPdf(print);
         } catch (Exception e){
-
+            e.printStackTrace();
         }
         return data;
     }
 
     @Override
     public List<MaterialesResumenDTO> listarResumen() {
-        List<MaterialesResumenDTO> materiales = new ArrayList<>();
+        List<MaterialesResumenDTO> materialesResumenDTOS = new ArrayList<>();
         var materials = materialRepository.findAll();
+
         materials.stream()
                 .collect(Collectors.groupingBy(mat -> mat.getGame().getName(), Collectors.counting()))
-                .forEach((name, count)->System.out.println(name+"\t"+count));
-
-        return null;
+                .forEach((name, count)->
+                    materialesResumenDTOS.add( new MaterialesResumenDTO(name, count.intValue())));
+        return materialesResumenDTOS;
     }
 }

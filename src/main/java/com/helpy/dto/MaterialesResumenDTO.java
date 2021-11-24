@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class MaterialesResumenDTO {
-    private Integer cantidad;
     private String game;
+    private Integer cantidad;
 }

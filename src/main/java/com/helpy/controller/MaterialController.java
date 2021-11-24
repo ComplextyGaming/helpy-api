@@ -2,6 +2,7 @@ package com.helpy.controller;
 
 import com.helpy.dto.MaterialRequest;
 import com.helpy.dto.MaterialResponse;
+import com.helpy.dto.MaterialesResumenDTO;
 import com.helpy.exception.ResourceNotFoundException;
 import com.helpy.model.Tag;
 import com.helpy.repository.GameRepository;
@@ -10,10 +11,12 @@ import com.helpy.util.MaterialConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -92,5 +95,20 @@ public class MaterialController {
         var material = materialService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Material not found"));
         materialService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/listarResumen")
+    public ResponseEntity<List<MaterialesResumenDTO>> listarResumen() {
+        List<MaterialesResumenDTO> materials = new ArrayList<>();
+        materials = materialService.listarResumen();
+        return new ResponseEntity<List<MaterialesResumenDTO>>(materials, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/leerArchivo", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> leerArchivo() throws IOException {
+
+        byte[] arr = materialService.generarReporte();
+
+        return new ResponseEntity<byte[]>(arr, HttpStatus.OK);
     }
 }

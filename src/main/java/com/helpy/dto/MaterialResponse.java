@@ -12,5 +12,5 @@ public class MaterialResponse {
     private String description;
     private Double cost;
     private Double discount;
-    private List<Tag> tags;
+    private List<TagResponse> tags;
 }
