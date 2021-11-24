@@ -53,7 +53,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
         configurer.inMemory().withClient(clientId).secret(bcrypt.encode(clientSecret)).authorizedGrantTypes(grantType) //, "refresh_token"
-                .scopes(scopeRead, scopeWrite).resourceIds(resourceIds).accessTokenValiditySeconds(1000)
+                .scopes(scopeRead, scopeWrite).resourceIds(resourceIds).accessTokenValiditySeconds(2592000)
                 .refreshTokenValiditySeconds(0);
     }
 
