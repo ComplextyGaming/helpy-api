@@ -7,6 +7,7 @@ import com.helpy.model.Expert;
 import com.helpy.service.ExpertService;
 import com.helpy.util.ExpertConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ExpertController {
     @Autowired
     private ExpertConverter converter;
+
     @Autowired
     private ExpertService service;
 

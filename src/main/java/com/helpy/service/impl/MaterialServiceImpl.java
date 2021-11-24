@@ -7,6 +7,8 @@ import com.helpy.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("MaterialServiceImpl")
 public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> implements MaterialService {
 
@@ -16,5 +18,10 @@ public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> impleme
     @Override
     protected GenericRepository<Material, Long> getRepository() {
         return materialRepository;
+    }
+
+    @Override
+    public List<Material> getByExpertId(Long id) throws Exception {
+        return materialRepository.findMaterialsByExpert_Id(id);
     }
 }
