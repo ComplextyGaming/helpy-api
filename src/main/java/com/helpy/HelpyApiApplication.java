@@ -2,7 +2,9 @@ package com.helpy;
 
 import com.helpy.dto.GameRequest;
 import com.helpy.service.GameService;
+import com.helpy.service.MaterialService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +30,13 @@ public class HelpyApiApplication {
                 gameService.create(new GameRequest(131800L, "Call of Duty: Warzone"));
 
             }
+        };
+    }
+
+    @Bean
+    CommandLineRunner run(@Qualifier("MaterialServiceImpl") MaterialService materialService){
+        return args -> {
+
         };
     }
 
