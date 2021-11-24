@@ -26,6 +26,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -122,22 +123,11 @@ public class MaterialController {
 
     @GetMapping("/expert/{expertId}/tag/{tagId}")
     public ResponseEntity<List<MaterialResponse>> getByExpertIdAndTagId(@Valid @PathVariable(name = "expertId") Long expertId,
-                                                                        @Valid @PathVariable(name = "tagId") Long tagId) throws Exception{
-        var materials = materialService.getByExpertId(expertId);
-        var queryMaterial = materials;
-        var m = materials.stream().map(material -> {
-            if(material.getId() == expertId){
-                material.getTags().stream().map(tag -> {
-                    if(tag.getId() == tagId){
-                        queryMaterial.add(material);
-                    }
-                    return null;
-                });
-            }
-            return null;
-        });
+                                                                        @Valid @PathVariable(name = "tagId") Long tagId) throws Exception {
 
-        return new ResponseEntity<>(converter.convertMaterialToResponse(queryMaterial), HttpStatus.OK);
+        var materials = materialService.getByExpertIdAndTagIg(expertId, tagId);
+        return new ResponseEntity<>(converter.convertMaterialToResponse(materials), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/listarResumen")
     public ResponseEntity<List<MaterialesResumenDTO>> listarResumen() {

@@ -22,8 +22,6 @@ public class GameProviderServiceImpl implements GameProviderService {
         //TwitchToken token = tAuth.requestTwitchToken("ov3od6hqyjyb0iurx0hbbvp6ijde7v", "4jmt7pvh71k1y0drgnljoy9p528djb");
         TwitchToken token = tAuth.requestTwitchToken("ov3od6hqyjyb0iurx0hbbvp6ijde7v", "4jmt7pvh71k1y0drgnljoy9p528djb");
       
-        TwitchToken token = tAuth.requestTwitchToken("ov3od6hqyjyb0iurx0hbbvp6ijde7v", "4jmt7pvh71k1y0drgnljoy9p528djb");
-      
         //TwitchToken token = tAuth.requestTwitchToken("ov3od6hqyjyb0iurx0hbbvp6ijde7v", "4jmt7pvh71k1y0drgnljoy9p528djb");
         wrapper.setCredentials("ov3od6hqyjyb0iurx0hbbvp6ijde7v", "s1z3o4nn33356mgsfj1xcb5swut2b9");
     }

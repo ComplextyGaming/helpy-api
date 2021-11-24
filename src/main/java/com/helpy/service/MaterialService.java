@@ -12,4 +12,5 @@ public interface MaterialService extends CrudService<Material, Long> {
     byte[] generarReporte();
     List<MaterialesResumenDTO> listarResumen();
 
+    List<Material> getByExpertIdAndTagIg(Long expertId, Long tagId);
 }
