@@ -17,6 +17,7 @@ public class HelpyApiApplication {
         SpringApplication.run(HelpyApiApplication.class, args);
     }
 
+    /*
     @Bean
     CommandLineRunner run(GameService gameService){
         return args -> {
@@ -30,5 +31,5 @@ public class HelpyApiApplication {
             }
         };
     }
-
+    */
 }

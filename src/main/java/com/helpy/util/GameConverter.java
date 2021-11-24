@@ -5,6 +5,8 @@ import com.api.igdb.utils.ImageType;
 import com.helpy.dto.GameRequest;
 import com.helpy.dto.GameResponse;
 import com.helpy.model.Game;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -14,6 +16,10 @@ import java.util.stream.Collectors;
 
 @Component
 public class GameConverter {
+
+    @Autowired
+    private ModelMapper mapper;
+
     public Game convertGameToEntity(GameRequest request){
         return Game.builder()
                 .name(request.getName())
@@ -42,5 +48,8 @@ public class GameConverter {
                         .filter(g -> g.getId() == game.getProviderId()) .findFirst()
                         .orElseThrow(() -> new ResourceAccessException("Game not found with id " + game.getProviderId()))))
                 .collect(Collectors.toList());
+    }
+    public List<Game> convertToListGame(List<Game> games){
+        return games.stream().map(game -> mapper.map(game, Game.class)).collect(Collectors.toList());
     }
 }
