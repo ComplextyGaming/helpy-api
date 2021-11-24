@@ -52,4 +52,15 @@ public class GameServiceImpl implements GameService {
         throw new ModelNotFoundException("Game not found in provider with id " + game.getProviderId());
     }
 
+    @Override
+    public List<GameResponse> findByNameContaining(String like) throws Exception{
+        List<Game> games = gameRepository.findByNameContainingIgnoreCase(like);
+        if (games.isEmpty()){
+            throw new ModelNotFoundException("Game is empty");
+        }
+        String fields = games.stream().map(Game::getProviderId).collect(Collectors.toList()).toString();
+        var providedGames = providerService.getAllGames(fields.substring(1, fields.length()-1));
+        return converter.convertGameToResponse(games, providedGames);
+    }
+
 }

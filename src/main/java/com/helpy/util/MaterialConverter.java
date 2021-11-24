@@ -1,8 +1,11 @@
 package com.helpy.util;
 
+import com.helpy.dto.ListTagRequest;
 import com.helpy.dto.MaterialRequest;
 import com.helpy.dto.MaterialResponse;
+import com.helpy.dto.TagResponse;
 import com.helpy.model.Material;
+import com.helpy.model.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,5 +27,8 @@ public class MaterialConverter {
     }
     public List<MaterialResponse> convertMaterialToResponse(List<Material> materials){
         return materials.stream().map(material -> modelMapper.map(material, MaterialResponse.class)).collect(Collectors.toList());
+    }
+    public Tag convertListTagToEntity(ListTagRequest request){
+        return modelMapper.map(request, Tag.class);
     }
 }

@@ -11,4 +11,5 @@ public interface GameService {
     List<GameResponse> getAll() throws Exception;
     GameResponse getById(Long id) throws Exception;
     Game create(GameRequest game) throws Exception;
+    List<GameResponse> findByNameContaining(String like) throws Exception;
 }
