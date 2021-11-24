@@ -32,6 +32,14 @@ public class ScheduleController {
     @Autowired
     private ScheduleConverter converter;
 
+
+    @GetMapping("/expert/{expertId}")
+    public ResponseEntity<List<ScheduleResponse>> getAllByExpertId(@PathVariable Long expertId) throws Exception{
+        var schedules = scheduleService.getAllByExpertId(expertId);
+        return new ResponseEntity<>(converter.convertScheduleToResponse(schedules), HttpStatus.OK);
+    }
+
+
     @GetMapping
     public ResponseEntity<List<ScheduleResponse>> getAll() throws Exception{
         var schedules = scheduleService.getAll();

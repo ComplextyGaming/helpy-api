@@ -7,6 +7,8 @@ import com.helpy.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ScheduleServiceImpl extends CrudServiceImpl<Schedule, Long> implements ScheduleService {
     @Autowired
@@ -15,5 +17,10 @@ public class ScheduleServiceImpl extends CrudServiceImpl<Schedule, Long> impleme
     @Override
     protected GenericRepository<Schedule, Long> getRepository() {
         return scheduleRepository;
+    }
+
+    @Override
+    public List<Schedule> getAllByExpertId(Long expertId) {
+        return scheduleRepository.findByExpertId(expertId);
     }
 }
