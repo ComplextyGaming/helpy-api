@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.*;
 
 import java.io.File;
@@ -41,7 +43,6 @@ public class MaterialServiceImpl extends CrudServiceImpl<Material, Long> impleme
 
     public byte[] generarReporte() {
         byte[] data = null;
-
         Map<String, Object> params = new HashMap<>();
         params.put("txt_titulo", "Prueba de titulo");
 

@@ -30,7 +30,9 @@ public class ExpertServiceImpl extends  CrudServiceImpl<Expert, Long> implements
         var role = new Rol();
         role.setIdRol(1);
         expert.getRoles().add(role);
-        return super.create(expert);
+        expert.setId(null);
+        var newExpert = expertRepository.save(expert);
+        return newExpert;
     }
 
     @Override
