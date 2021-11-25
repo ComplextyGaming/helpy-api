@@ -24,8 +24,6 @@ public class ExpertController {
     @Autowired
     private ExpertService service;
 
-
-
     @GetMapping
     public ResponseEntity<List<ExpertResponse>> getAllExperts() throws Exception {
         var experts = service.getAll();
