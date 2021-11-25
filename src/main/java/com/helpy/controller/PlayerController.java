@@ -22,7 +22,6 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
-
     @GetMapping
     public ResponseEntity<List<PlayerResponse>> getAllPlayers() throws Exception {
         var players = playerService.getAll();

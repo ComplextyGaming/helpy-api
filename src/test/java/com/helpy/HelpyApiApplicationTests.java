@@ -12,22 +12,4 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 class HelpyApiApplicationTests {
 
-    @Autowired
-    private UserRepository repo;
-
-    @Autowired
-    private BCryptPasswordEncoder bcrypt;
-
-    @Test
-    void verficarClave() {
-        Player us = new Player();
-        us.setUsername("user@gmail.com");
-        us.setPassword(bcrypt.encode("1234"));
-        us.setFirstName("user");
-        us.setLastName("userlast");
-        us.setEmail("user@gmail.com");
-        us.setPhone("961460601");
-        Player retorno = repo.save(us);
-        assertTrue(retorno.getPassword().equals(us.getPassword()));
-    }
 }
